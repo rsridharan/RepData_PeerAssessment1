@@ -5,12 +5,11 @@ output:
     keep_md: true
     Author: Ramamurthi Sridharan
 ---
-
 ## Loading and preprocessing the data
 ## sum steps data by day - a vector
 ##  Plot as a histogram
 ##  Summary (resulting data)
-```{r}
+```{r read data}
 data <- read.csv(unzip("activity.zip","activity.csv"))
 nrow(data)
 ncol(data)
@@ -20,7 +19,7 @@ summary(data)
 
 ##  Compute the daily sum of total steps and plot a histogram
 
-```{r}
+```{r determine sum}
 y <- tapply(data$steps, data$date, sum)
 y
 hist(y, breaks =100)
@@ -28,14 +27,14 @@ hist(y, breaks =100)
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+```{r determine mean of the sum}
 mean.total = mean(y, na.rm = TRUE)
 mean.total
 ```
 
 ## What is the average daily activity pattern?
 
-```{r}
+```{r daily average per interval}
 daily.int.mean = NULL
 daily.int.mean <- tapply(data$steps, data$interval, mean, na.rm = TRUE)
 daily.int.mean
@@ -46,7 +45,7 @@ plot(daily.int.mean, type = "l", xlab = "Interval", ylab = "daily actvity (means
 ## Imputing missing values 
 ## daily mean values for corresponding interval is used to replace the NA's
 
-```{r} 
+```{r remove NAs} 
 data[is.na(data)] <- tapply(data$steps, data$interval, mean, na.rm = TRUE)
 z <- tapply(data$steps, data$date, sum)
 z
